@@ -50,7 +50,7 @@ jobs:
           ASTRO_BASE: ${{ steps.pages.outputs.base_path || (steps.pages.outputs.origin && '/') || format('/{0}', github.event.repository.name) }}
         run: |
           set -euo pipefail
-          npm run preview -- --host 127.0.0.1 --port 4321 > /tmp/rook-preview.log 2>&1 &
+          npm run preview -- --port 4321 > /tmp/rook-preview.log 2>&1 &
           preview_pid=$!
           trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
           base_path="/${ASTRO_BASE#/}"
