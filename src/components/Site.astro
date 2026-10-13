@@ -8,6 +8,8 @@ const {content:c} = Astro.props;
 const app = 'https://lite.rooknotes.com';
 const github = 'https://github.com/volkanto/rook-lite';
 const license = `${github}/blob/main/LICENSE`;
+const sponsors = 'https://github.com/sponsors/volkanto';
+const coffee = 'https://buymeacoffee.com/volkanto';
 const anchors = ['features','how-it-works','why-rook','faq'];
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const local = (path: string) => base + path.replace(/^\//, '');
@@ -100,11 +102,20 @@ const structuredData = {
       <div class="comparison-mobile">{c.comparisonHeaders.map((header,i)=><article class:list={['comparison-card',i===0&&'rook-comparison']}><h3>{i===0&&<span class="status-dot"></span>}{header}</h3><dl>{c.comparisonRows.map(row=><div><dt>{row[0]}</dt><dd>{row[i+1]}</dd></div>)}</dl></article>)}</div>
       <p class="comparison-note">{c.comparisonNote}</p>
     </section>
-    <section class="source-section container" aria-labelledby="source-title"><div class="source-art" aria-hidden="true"><span class="source-bracket">{`{`}</span><img src={local('images/rook-logo.webp')} width="96" height="96" alt="" loading="lazy"/><span class="source-bracket">{`}`}</span><span class="source-art-label">{c.lang==='tr'?'< açık kaynakla geliştirildi / >':'< built in the open / >'}</span></div><div class="source-copy"><p class="eyebrow">{c.sourceLabel}</p><h2 id="source-title" class="preserve-lines">{c.sourceTitle}</h2><p>{c.sourceDescription}</p><div class="source-actions"><a href={github} class="button button-ink"><Icon name="github"/>{c.sourceCta}<Icon name="diagonal" size={17}/></a><a href={license} class="license-link">{c.license}<Icon name="diagonal" size={14}/></a></div><p class="source-note">{c.sourceNote}</p></div></section>
+    <section class="source-section container" aria-labelledby="source-title"><div class="source-art" aria-hidden="true"><span class="source-bracket">{`{`}</span><img src={local('images/rook-logo.webp')} width="96" height="96" alt="" loading="lazy"/><span class="source-bracket">{`}`}</span><span class="source-art-label">{c.lang==='tr'?'< açık kaynakla geliştirildi / >':'< built in the open / >'}</span></div><div class="source-copy"><p class="eyebrow">{c.sourceLabel}</p><h2 id="source-title" class="preserve-lines">{c.sourceTitle}</h2><p>{c.sourceDescription}</p><div class="source-actions"><a href={github} class="button button-ink"><Icon name="github"/>{c.sourceCta}<Icon name="diagonal" size={17}/></a><a href={license} class="license-link">{c.license}<Icon name="diagonal" size={14}/></a></div><p class="source-note">{c.sourceNote}</p>
+      <div id="support-rook" class="support-block" role="region" aria-labelledby="support-title">
+        <h3 id="support-title"><Icon name="heart" size={19}/>{c.supportTitle}</h3>
+        <p>{c.supportDescription}</p>
+        <div class="support-actions">
+          <a href={sponsors} class="button button-secondary button-support"><Icon name="heart" size={16}/>{c.supportGithub}<Icon name="diagonal" size={14}/></a>
+          <a href={coffee} class="button button-secondary button-support"><Icon name="coffee" size={16}/>{c.supportCoffee}<Icon name="diagonal" size={14}/></a>
+        </div>
+      </div>
+    </div></section>
     <section id="faq" class="section container faq-section" aria-labelledby="faq-title"><div class="section-heading"><p class="eyebrow">{c.faqLabel}</p><h2 id="faq-title" class="preserve-lines">{c.faqTitle}</h2></div><div class="faq-list">{c.faqs.map(([question,answer])=><details><summary>{question}<span class="faq-plus"><Icon name="plus" size={20}/></span></summary><p>{answer}</p></details>)}</div></section>
     <section class="final-section" aria-labelledby="final-title"><div class="container final-inner"><p class="eyebrow"><span class="status-dot"></span>{c.finalLabel}</p><h2 id="final-title" class="preserve-lines">{c.finalTitle}</h2><p>{c.finalDescription}</p><a class="button" href={app}>{c.open}<Icon name="arrow"/></a><p class="final-trust">{c.finalTrust}</p></div></section>
   </main>
-  <footer class="container site-footer"><div class="footer-top"><div><a href={local(c.lang==='tr'?'tr/':'')} class="brand"><img src={local('images/rook-logo.webp')} width="34" height="34" alt=""/><span>rook<span class="brand-light">notes</span><span class="brand-dot">.</span></span></a><p>{c.footerDescription}</p></div><nav aria-label={c.lang==='tr'?'Alt gezinme':'Footer navigation'}><a href={app}>{c.footerApp}<Icon name="diagonal" size={14}/></a><a href={github}>{c.footerSource}<Icon name="diagonal" size={14}/></a><a href={license}>{c.footerLicense}<Icon name="diagonal" size={14}/></a><a href={local(c.alternate)} hreflang={c.lang==='tr'?'en':'tr'}>{c.alternateLabel}<Icon name="globe" size={15}/></a></nav></div><div class="footer-bottom"><span>© {new Date().getFullYear()} Rook Notes</span><span>{c.footerBottom}</span></div></footer>
+  <footer class="container site-footer"><div class="footer-top"><div><a href={local(c.lang==='tr'?'tr/':'')} class="brand"><img src={local('images/rook-logo.webp')} width="34" height="34" alt=""/><span>rook<span class="brand-light">notes</span><span class="brand-dot">.</span></span></a><p>{c.footerDescription}</p></div><nav aria-label={c.lang==='tr'?'Alt gezinme':'Footer navigation'}><a href={app}>{c.footerApp}<Icon name="diagonal" size={14}/></a><a href={github}>{c.footerSource}<Icon name="diagonal" size={14}/></a><a href={license}>{c.footerLicense}<Icon name="diagonal" size={14}/></a><a href="#support-rook">{c.supportTitle}<Icon name="heart" size={14}/></a><a href={local(c.alternate)} hreflang={c.lang==='tr'?'en':'tr'}>{c.alternateLabel}<Icon name="globe" size={15}/></a></nav></div><div class="footer-bottom"><span>© {new Date().getFullYear()} Rook Notes</span><span>{c.footerBottom}</span></div></footer>
   <dialog id="image-dialog" aria-labelledby="dialog-title"><div class="dialog-header"><h2 id="dialog-title">{c.screenshotTitle}</h2><button type="button" class="dialog-close" aria-label={c.close}><Icon name="close"/><span>{c.close}</span></button></div><div class="dialog-image-scroll" tabindex="0" role="region" aria-label={c.screenshotTitle}><img id="dialog-image" alt=""/></div><p id="dialog-caption"></p></dialog>
   <script>
     const menu = document.querySelector<HTMLButtonElement>('.menu-toggle')!;

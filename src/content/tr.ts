@@ -57,6 +57,8 @@ export const tr: typeof en = {
   sourceLabel: 'DOĞASI GEREĞİ AÇIK', sourceTitle: 'Ücretsiz kullan.\nKodu incele.',
   sourceDescription: 'Rook Lite bağımsız geliştirilen, Apache 2.0 lisanslı açık kaynak bir projedir. Kodu oku, gelişimini takip et veya sonraki adımlara katkıda bulun.',
   sourceCta: 'GitHub’da kaynak kodu gör', license: 'Apache 2.0 lisansı', sourceNote: 'Rook Notes markadır. Rook Lite bugün kullanabileceğin ücretsiz uygulamadır.',
+  supportTitle: 'Rook’u destekle', supportDescription: 'Rook ücretsizdir ve bağımsız olarak geliştirilir. Geliştirilmesine destek ol.',
+  supportGithub: 'GitHub Sponsors', supportCoffee: 'Buy Me a Coffee',
   faqLabel: 'BİLMENDE FAYDA VAR', faqTitle: 'İyi sorular.\nAçık cevaplar.',
   faqs: [
     ['Hesap açmam gerekiyor mu?', 'Hayır. Tarayıcında Rook Lite’ı aç ve yazmaya başla. Kayıt olma adımı yoktur.'],

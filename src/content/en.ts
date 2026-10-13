@@ -56,6 +56,8 @@ export const en = {
   sourceLabel: 'OPEN BY NATURE', sourceTitle: 'Free to use.\nOpen to inspect.',
   sourceDescription: 'Rook Lite is an independently developed, open-source project under the Apache 2.0 license. Read the code, follow its development, or help shape what comes next.',
   sourceCta: 'View source on GitHub', license: 'Apache 2.0 license', sourceNote: 'Rook Notes is the brand. Rook Lite is the free app you can use today.',
+  supportTitle: 'Support Rook', supportDescription: 'Rook is free and independently built. Help support its development.',
+  supportGithub: 'GitHub Sponsors', supportCoffee: 'Buy Me a Coffee',
   faqLabel: 'A FEW THINGS TO KNOW', faqTitle: 'Good questions.\nStraight answers.',
   faqs: [
     ['Do I need an account?', 'No. Open Rook Lite in your browser and start writing. There is no sign-up step.'],
