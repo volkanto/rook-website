@@ -90,7 +90,7 @@ const structuredData = {
     </section>
     <section class="privacy-section section" aria-labelledby="privacy-title">
       <div class="container privacy-grid">
-        <div class="privacy-copy"><p class="eyebrow"><Icon name="lock" size={16}/>{c.privacyLabel}</p><h2 id="privacy-title">{c.privacyTitle.map((line,i)=><Fragment>{i>0&&<br/>}<span class={i===2?'green':''}>{line}</span></Fragment>)}</h2><p class="privacy-description">{c.privacyDescription}</p><ul>{c.privacyPoints.map(point=><li><Icon name="circle" size={19}/><span>{point}</span></li>)}</ul><p class="privacy-detail">{c.privacyDetail}</p></div>
+        <div class="privacy-copy"><p class="eyebrow"><Icon name="lock" size={16}/>{c.privacyLabel}</p><h2 id="privacy-title">{c.privacyTitle.map((line,i)=><Fragment>{i>0&&<br/>}<span class={i===2?'brand-accent':''}>{line}</span></Fragment>)}</h2><p class="privacy-description">{c.privacyDescription}</p><ul>{c.privacyPoints.map(point=><li><Icon name="circle" size={19}/><span>{point}</span></li>)}</ul><p class="privacy-detail">{c.privacyDetail}</p></div>
         <div class="privacy-visual"><div class="dark-frame"><div class="dark-frame-label"><span class="status-dot"></span>Rook Lite <span aria-hidden="true">/</span> {c.lang==='tr'?'Koyu tema':'Dark mode'}</div><Screenshot file="daily-dark" alt={c.darkAlt} enlarge={c.enlarge}/></div><div class="backup-notice"><Icon name="download" size={22}/><div><strong>{c.backupWarning}</strong><p>{c.originNote}</p></div></div></div>
       </div>
     </section>
