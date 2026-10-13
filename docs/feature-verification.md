@@ -19,7 +19,7 @@ Verified against Rook Lite **1.6.0**, commit [`19834729d368fa3a5aca04345fd28101b
 | Product analytics default off | `src/analytics/analytics.ts`, README privacy section, and active privacy settings. Opt-in aggregate feature counters are distinguished from note content and from a zero-network-request claim. |
 | Free, independently developed, Apache 2.0 | Product README, package manifest and LICENSE. No paid edition, user counts, reviews, customer logos or stars invented. |
 
-All marketing screenshots use ten synthetic notes spanning 5–9 October 2026. The weekly summary was generated from those same notes by the application. The original retina captures and provenance manifest are retained; no AI-generated UI is used.
+Both light and dark marketing screenshots use the same ten synthetic notes spanning 5–9 October 2026. The weekly summary was generated from those same notes by the application. Seven view pairs (daily desktop/mobile, summaries, tasks, templates, command palette, and backup) were captured with the app’s actual theme setting; each manifest entry records that theme. The original retina captures and provenance manifest are retained; no AI-generated UI is used.
 
 ## Limits
 

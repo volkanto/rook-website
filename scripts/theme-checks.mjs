@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { assertScreenshotTheme } from './screenshot-checks.mjs';
 
 export async function checkThemes(browser, base, check) {
   const url = `${base}/`;
@@ -17,6 +18,7 @@ export async function checkThemes(browser, base, check) {
         assert.equal(await page.locator('html').evaluate(el => getComputedStyle(el).backgroundColor),
           colorScheme === 'dark' ? 'rgb(32, 32, 36)' : 'rgb(255, 255, 255)');
         assert(await page.locator('#theme-select').isDisabled());
+        await assertScreenshotTheme(page, colorScheme);
       } finally { await context.close(); }
     });
   }
@@ -38,6 +40,7 @@ export async function checkThemes(browser, base, check) {
       await page.goto(url);
       assert.equal(await page.evaluate(() => window.__rookFirstBodyTheme), 'dark');
       assert.equal(await page.locator('#theme-select').inputValue(), 'dark');
+      await assertScreenshotTheme(page, 'dark');
       assert.equal(await page.locator('meta[name="theme-color"]').getAttribute('content'), '#202024');
     } finally { await context.close(); }
   });

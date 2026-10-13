@@ -1,6 +1,6 @@
 # Brand tokens and components
 
-The site uses Rook’s indigo brand palette with neutral surfaces and the app’s charcoal dark tones. Indigo connects headings, buttons, focus states, icons, comparisons and social cards to the existing mascot. Fonts are served by the browser. Product screenshots preserve the real application UI.
+The site uses Rook’s indigo brand palette with neutral surfaces and the app’s charcoal dark tones. Indigo connects headings, buttons, focus states, icons, comparisons and social cards to the existing mascot. Fonts are served by the browser. Product screenshots use matching real light/dark captures of the application UI.
 
 | Token | Value | Use |
 | --- | --- | --- |
@@ -24,7 +24,7 @@ Reusable components: `Icon.astro` (local accessible decorative icons), `Screensh
 
 No external fonts, analytics, remote embeds, autoplay video, scroll hijacking, neon surfaces or stock photography are included. Reduced-motion preferences disable animation and smooth scrolling. Native dialog supplies focus containment and Escape; the previous focus is explicitly restored.
 
-Palette source: `src/app.css` in [Rook Lite commit 19834729](https://github.com/volkanto/rook-lite/blob/19834729d368fa3a5aca04345fd28101b79d0790/src/app.css). The indigo/lavender pair comes from its “Rook fallback palette”; charcoal tokens come from its explicit dark-theme palette. The active app screenshots retain their original blue controls. Hover and dark-section brand accents are derived from these source tokens for contrast.
+Palette source: `src/app.css` in [Rook Lite commit 19834729](https://github.com/volkanto/rook-lite/blob/19834729d368fa3a5aca04345fd28101b79d0790/src/app.css). The indigo/lavender pair comes from its “Rook fallback palette”; charcoal tokens come from its explicit dark-theme palette. The app screenshots retain their original controls and use the matching captured theme. Hover and dark-section brand accents are derived from these source tokens for contrast.
 
 ## Theme preference
 
@@ -32,6 +32,8 @@ The header’s native, keyboard-accessible theme selector offers System, Light, 
 
 A small inline head script resolves the theme before the body renders, preventing a light flash for saved dark preferences. The CSS media-query fallback follows the OS when JavaScript is disabled. The theme selector is disabled until its handler is attached.
 
-Dark mode keeps the same layout, typography, section rhythm and imagery. It uses charcoal surfaces (`#19191D` / `#202024`), readable light text (`#F5F5F7`), and softened indigo (`#AAAAFF`) with dark text on primary buttons. Screenshot frames, comparison cards, support buttons, FAQ controls, navigation and the image dialog use the shared theme tokens. Real product screenshots retain their captured appearance.
+Dark mode keeps the same layout, typography and section rhythm. It uses charcoal surfaces (`#19191D` / `#202024`), readable light text (`#F5F5F7`), and softened indigo (`#AAAAFF`) with dark text on primary buttons. Screenshot frames, comparison cards, support buttons, FAQ controls, navigation and the image dialog use the shared theme tokens. Real product screenshots switch to matching light/dark captures, including the mobile hero and enlarged images, without color filters or artificial recoloring.
 
 `src/styles/theme.css` holds the dark tokens and header control; `scripts/theme-checks.mjs` verifies initial system preferences, first-render saved overrides, live system changes, keyboard switching, persistence, returning to System, tab synchronization, and storage/JavaScript fallbacks. Dark desktop and mobile previews in both languages are saved alongside the light previews with `-dark-` in the filename.
+
+`Screenshot.astro` renders paired, dimensioned `<picture>` variants. CSS chooses the picture from the resolved theme, with an OS-preference fallback when JavaScript is unavailable. Each picture has its own real mobile source where applicable. Enlarged views use the active picture’s responsive source and update on theme/viewport changes, including live system changes while the dialog is open. The screenshot manifest records the actual app theme for every capture.

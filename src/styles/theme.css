@@ -89,3 +89,15 @@
 @media (max-width: 450px) {
   .nav-actions .button-small > svg { display: none; }
 }
+
+/* Theme-matched real captures, including when JavaScript is unavailable. */
+[data-screenshot-theme="dark"] { display: none; }
+.screenshot-button [data-screenshot-theme="dark"] { display: none; }
+:root[data-theme="dark"] [data-screenshot-theme="light"] { display: none; }
+:root[data-theme="dark"] [data-screenshot-theme="dark"] { display: inline; }
+:root[data-theme="dark"] .screenshot-button [data-screenshot-theme="dark"] { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) [data-screenshot-theme="light"] { display: none; }
+  :root:not([data-theme]) [data-screenshot-theme="dark"] { display: inline; }
+  :root:not([data-theme]) .screenshot-button [data-screenshot-theme="dark"] { display: block; }
+}

@@ -1,6 +1,7 @@
 import { chromium } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
 import { checkThemes } from './theme-checks.mjs';
+import { checkScreenshotVariants, checkLiveScreenshotChanges } from './screenshot-checks.mjs';
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 const base = (process.env.SITE_URL || 'http://127.0.0.1:4321').replace(/\/$/, '');
@@ -31,6 +32,7 @@ try {
    await page.locator('img:not(#dialog-image)').evaluateAll(async imgs=>{await Promise.all(imgs.map(async img=>{img.loading='eager';await img.decode();}));});
    const broken=await page.locator('img:not(#dialog-image)').evaluateAll(imgs=>imgs.filter(img=>!img.complete||img.naturalWidth===0).map(img=>img.src));assert.deepEqual(broken,[]);
   });
+  await check(`${label}: real screenshots and enlarged images match theme at desktop/mobile widths`, () => checkScreenshotVariants(page, colorScheme));
   await check(`${label}: tabs support arrows, Home, End, and correct panels`,async()=>{
    await page.locator('#tab-0').focus();await page.keyboard.press('ArrowRight');
    assert.equal(await page.locator('#tab-1').getAttribute('aria-selected'),'true');assert(await page.locator('#panel-1').isVisible());assert(!await page.locator('#panel-0').isVisible());
@@ -70,6 +72,7 @@ try {
  }
  }
  await checkThemes(browser, base, check);
+ await checkLiveScreenshotChanges(browser, base, check);
  const context=await browser.newContext({reducedMotion:'reduce',colorScheme:'light'});const page=await context.newPage();await page.goto(base+'/');
  await check('Reduced motion is respected',async()=>assert.equal(await page.evaluate(()=>getComputedStyle(document.documentElement).scrollBehavior),'auto'));
  await check('Language link changes all content',async()=>{await page.locator('.language-link').click();await page.waitForURL('**/tr/');assert.equal(await page.locator('html').getAttribute('lang'),'tr');assert.equal(await page.locator('#hero-title').innerText(),'Gününü kaydet.\nİlerlemeni gör.');});

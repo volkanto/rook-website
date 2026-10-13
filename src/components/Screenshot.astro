@@ -1,15 +1,31 @@
 ---
 import Icon from './Icon.astro';
 import manifest from '../../public/images/manifest.json';
-interface Props { file: string; alt: string; enlarge: string; eager?: boolean; class?: string; mobile?: string }
-const {file,alt,enlarge,eager=false,class:className='',mobile} = Astro.props;
+interface Props {
+  file: string;
+  alt: string;
+  enlarge: string;
+  eager?: boolean;
+  class?: string;
+  mobile?: string;
+  dark?: string;
+}
+const { file, alt, enlarge, eager = false, class: className = '', mobile,
+  dark = file === 'daily-notes' ? 'daily-dark' : `${file}-dark` } = Astro.props;
 const imagePath = (name: string) => import.meta.env.BASE_URL.replace(/\/?$/, '/') + `images/${name}.webp`;
-const screen = manifest.screens.find(s => s.file === `${file}.webp`)!;
+const variants = [
+  { theme: 'light', file, mobile },
+  { theme: 'dark', file: dark, mobile: mobile ? `${mobile}-dark` : undefined },
+].map(variant => ({
+  ...variant,
+  screen: manifest.screens.find(screen => screen.file === `${variant.file}.webp`)!,
+  mobileScreen: variant.mobile ? manifest.screens.find(screen => screen.file === `${variant.mobile}.webp`) : undefined,
+}));
 ---
-<button type="button" class:list={['screenshot-button',className]} data-zoom={imagePath(file)} data-alt={alt} data-mobile-zoom={mobile ? imagePath(mobile) : undefined} aria-label={`${enlarge}: ${alt}`}>
-  <picture>
-  {mobile && <source media="(max-width: 700px)" srcset={imagePath(mobile)} width="780" height="1688"/>}
-  <img src={imagePath(file)} alt={alt} width={screen.width} height={screen.height} loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : 'auto'} decoding="async" />
-  </picture>
+<button type="button" class:list={['screenshot-button', className]} data-zoom={imagePath(file)} data-alt={alt} data-mobile-zoom={mobile ? imagePath(mobile) : undefined} aria-label={`${enlarge}: ${alt}`}>
+  {variants.map(variant => <picture data-screenshot-theme={variant.theme}>
+    {variant.mobileScreen && <source media="(max-width: 700px)" srcset={imagePath(variant.mobile!)} width={variant.mobileScreen.width} height={variant.mobileScreen.height}/>}
+    <img src={imagePath(variant.file)} alt={alt} width={variant.screen.width} height={variant.screen.height} loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : 'auto'} decoding="async"/>
+  </picture>)}
   <span class="zoom-cue"><Icon name="expand" size={16}/><span>{enlarge}</span></span>
 </button>

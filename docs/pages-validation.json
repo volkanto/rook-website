@@ -1,9 +1,13 @@
 {
-  "base": "http://127.0.0.1:4328/rook-website",
-  "testedAt": "2026-10-13T16:56:54.817Z",
+  "base": "http://127.0.0.1:4330/rook-website",
+  "testedAt": "2026-10-13T17:22:35.449Z",
   "results": [
     {
       "name": "en/light: language, metadata, real assets, and destinations",
+      "result": "passed"
+    },
+    {
+      "name": "en/light: real screenshots and enlarged images match theme at desktop/mobile widths",
       "result": "passed"
     },
     {
@@ -47,6 +51,10 @@
       "result": "passed"
     },
     {
+      "name": "en/dark: real screenshots and enlarged images match theme at desktop/mobile widths",
+      "result": "passed"
+    },
+    {
       "name": "en/dark: tabs support arrows, Home, End, and correct panels",
       "result": "passed"
     },
@@ -87,6 +95,10 @@
       "result": "passed"
     },
     {
+      "name": "tr/light: real screenshots and enlarged images match theme at desktop/mobile widths",
+      "result": "passed"
+    },
+    {
       "name": "tr/light: tabs support arrows, Home, End, and correct panels",
       "result": "passed"
     },
@@ -124,6 +136,10 @@
     },
     {
       "name": "tr/dark: language, metadata, real assets, and destinations",
+      "result": "passed"
+    },
+    {
+      "name": "tr/dark: real screenshots and enlarged images match theme at desktop/mobile widths",
       "result": "passed"
     },
     {
@@ -200,6 +216,10 @@
     },
     {
       "name": "Invalid saved preferences fall back to the system theme",
+      "result": "passed"
+    },
+    {
+      "name": "Open screenshots follow live system changes and responsive resizing",
       "result": "passed"
     },
     {

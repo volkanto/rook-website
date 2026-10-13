@@ -44,6 +44,7 @@ const structuredData = {
         document.querySelector('meta[name="theme-color"]').setAttribute('content', theme === 'dark' ? '#202024' : '#F7F7F8');
         const select = document.getElementById('theme-select');
         if (select) select.value = preference;
+        window.dispatchEvent(new Event('rook-theme-change'));
       }
       // Runs before the page styles and body render, including saved overrides.
       apply();
@@ -145,7 +146,7 @@ const structuredData = {
     <section class="privacy-section section" aria-labelledby="privacy-title">
       <div class="container privacy-grid">
         <div class="privacy-copy"><p class="eyebrow"><Icon name="lock" size={16}/>{c.privacyLabel}</p><h2 id="privacy-title">{c.privacyTitle.map((line,i)=><Fragment>{i>0&&<br/>}<span class={i===2?'brand-accent':''}>{line}</span></Fragment>)}</h2><p class="privacy-description">{c.privacyDescription}</p><ul>{c.privacyPoints.map(point=><li><Icon name="circle" size={19}/><span>{point}</span></li>)}</ul><p class="privacy-detail">{c.privacyDetail}</p></div>
-        <div class="privacy-visual"><div class="dark-frame"><div class="dark-frame-label"><span class="status-dot"></span>Rook Lite <span aria-hidden="true">/</span> {c.lang==='tr'?'Koyu tema':'Dark mode'}</div><Screenshot file="daily-dark" alt={c.darkAlt} enlarge={c.enlarge}/></div><div class="backup-notice"><Icon name="download" size={22}/><div><strong>{c.backupWarning}</strong><p>{c.originNote}</p></div></div></div>
+        <div class="privacy-visual"><div class="dark-frame"><div class="dark-frame-label"><span class="status-dot"></span>Rook Lite <span aria-hidden="true">/</span> <span data-screenshot-theme="light">{c.themeLight}</span><span data-screenshot-theme="dark">{c.themeDark}</span></div><Screenshot file="daily-notes" alt={c.dailyAlt} enlarge={c.enlarge}/></div><div class="backup-notice"><Icon name="download" size={22}/><div><strong>{c.backupWarning}</strong><p>{c.originNote}</p></div></div></div>
       </div>
     </section>
     <section id="why-rook" class="section container" aria-labelledby="why-title">
@@ -186,7 +187,21 @@ const structuredData = {
     const image = document.querySelector<HTMLImageElement>('#dialog-image')!;
     const caption = document.querySelector<HTMLElement>('#dialog-caption')!;
     let opener:HTMLElement|null=null;
-    document.querySelectorAll<HTMLButtonElement>('[data-zoom]').forEach(button=>button.addEventListener('click',()=>{opener=button;image.src=matchMedia('(max-width: 700px)').matches&&button.dataset.mobileZoom?button.dataset.mobileZoom:button.dataset.zoom!;image.alt=button.dataset.alt!;caption.textContent=button.dataset.alt!;dialog.showModal();document.body.classList.add('modal-open');}));
+    function refreshDialogImage() {
+      if (!opener) return;
+      const picture = [...opener.querySelectorAll<HTMLPictureElement>('picture')]
+        .find(picture => getComputedStyle(picture).display !== 'none');
+      const shown = picture?.querySelector<HTMLImageElement>('img');
+      if (!shown) return;
+      const source = [...picture!.querySelectorAll<HTMLSourceElement>('source')]
+        .find(source => !source.media || matchMedia(source.media).matches);
+      image.src = source ? new URL(source.srcset, document.baseURI).href : shown.src;
+      image.alt = shown.alt;
+      caption.textContent = shown.alt;
+    }
+    document.querySelectorAll<HTMLButtonElement>('[data-zoom]').forEach(button=>button.addEventListener('click',()=>{opener=button;refreshDialogImage();dialog.showModal();document.body.classList.add('modal-open');}));
+    window.addEventListener('rook-theme-change',()=>{if(dialog.open)refreshDialogImage();});
+    window.addEventListener('resize',()=>{if(dialog.open)requestAnimationFrame(refreshDialogImage);});
     dialog.querySelector('.dialog-close')!.addEventListener('click',()=>dialog.close());
     dialog.addEventListener('click',e=>{if(e.target===dialog){const rect=dialog.getBoundingClientRect();if(e.clientX<rect.left||e.clientX>rect.right||e.clientY<rect.top||e.clientY>rect.bottom)dialog.close();}});
     dialog.addEventListener('close',()=>{document.body.classList.remove('modal-open');opener?.focus({preventScroll:true});});

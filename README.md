@@ -71,6 +71,6 @@ ROOK_SOURCE_DIR=/tmp/rook-lite ROOK_CAPTURE_ORIGIN=http://127.0.0.1:5173 node sc
 npm run social
 ```
 
-Review the refreshed UI and all claims before publishing. Original retina PNGs are retained in `public/images/originals/`; the site uses compressed WebP images. `scripts/verify-product.mjs` separately checks offline writing against a local production Rook Lite server on port 5174. It operates only in a new disposable browser context.
+Review the refreshed UI and all claims before publishing. Every featured view has matching light/dark captures, including a real mobile editor for each theme. The selected theme also determines enlarged screenshot views. Original retina PNGs are retained in `public/images/originals/`; the site uses compressed WebP images. `scripts/verify-product.mjs` separately checks offline writing against a local production Rook Lite server on port 5174. It operates only in a new disposable browser context.
 
 The live Rook domains were unavailable through this cloud environment's network policy. Product validation used an unmodified local build of the recorded commit. See `THIRD_PARTY_NOTICES.md` for attribution.
