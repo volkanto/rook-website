@@ -1,0 +1,132 @@
+---
+import { en } from '../content/en';
+import Icon from './Icon.astro';
+import Screenshot from './Screenshot.astro';
+import '../styles/global.css';
+interface Props { content: typeof en }
+const {content:c} = Astro.props;
+const app = 'https://lite.rooknotes.com';
+const github = 'https://github.com/volkanto/rook-lite';
+const license = `${github}/blob/main/LICENSE`;
+const anchors = ['features','how-it-works','why-rook','faq'];
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const local = (path: string) => base + path.replace(/^\//, '');
+const absolute = (path: string) => new URL(local(path), Astro.site).href;
+const canonical = new URL(Astro.url.pathname.replace(/\/?$/, '/'), Astro.site);
+const structuredData = {
+  '@context':'https://schema.org', '@type':'SoftwareApplication', name:'Rook Lite',
+  url:app, applicationCategory:'ProductivityApplication', operatingSystem:'Web browser',
+  description:c.description, isAccessibleForFree:true, license:'https://www.apache.org/licenses/LICENSE-2.0',
+  codeRepository:github, offers:{'@type':'Offer',price:'0',priceCurrency:'USD'},
+};
+---
+<!doctype html>
+<html lang={c.lang}>
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#F7F7F8" />
+  <title>{c.title}</title><meta name="description" content={c.description}/>
+  <link rel="canonical" href={canonical}/>
+  <link rel="alternate" hreflang="en" href={absolute('')}/>
+  <link rel="alternate" hreflang="tr" href={absolute('tr/')}/>
+  <link rel="alternate" hreflang="x-default" href={absolute('')}/>
+  <link rel="icon" type="image/webp" href={local('images/rook-logo.webp')}/>
+  <meta property="og:type" content="website"/><meta property="og:site_name" content="Rook Notes"/>
+  <meta property="og:title" content={c.title}/><meta property="og:description" content={c.description}/>
+  <meta property="og:url" content={canonical}/><meta property="og:locale" content={c.lang==='tr'?'tr_TR':'en_US'}/>
+  <meta property="og:image" content={absolute(`images/social-${c.lang}.png`)}/>
+  <meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
+  <meta property="og:image:alt" content={c.hero.join(' ')}/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content={c.title}/><meta name="twitter:description" content={c.description}/>
+  <meta name="twitter:image" content={absolute(`images/social-${c.lang}.png`)}/>
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)}/>
+</head>
+<body>
+  <a class="skip-link" href="#main">{c.skip}</a>
+  <header class="site-header">
+    <div class="nav-container">
+      <a href={local(c.lang === 'tr' ? 'tr/' : '')} class="brand" aria-label="Rook Notes"><img src={local('images/rook-logo.webp')} width="38" height="38" alt=""/><span>rook<span class="brand-light">notes</span><span class="brand-dot">.</span></span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" aria-label={c.menuLabel}><Icon name="menu"/><span>{c.menu}</span></button>
+      <nav id="site-navigation" aria-label={c.lang==='tr'?'Ana gezinme':'Main navigation'}>
+        {c.nav.map((label,i)=><a href={`#${anchors[i]}`}>{label}</a>)}
+        <a href={github} class="github-nav" aria-label="GitHub"><Icon name="github" size={19}/><span>GitHub</span></a>
+      </nav>
+      <div class="nav-actions"><a class="language-link" href={local(c.alternate)} hreflang={c.lang==='tr'?'en':'tr'} aria-label={c.languageLabel}><Icon name="globe" size={17}/><span>{c.lang==='tr'?'EN':'TR'}</span></a><a class="button button-small" href={app}><span class="nav-cta-full">{c.open}</span><span class="nav-cta-short">{c.lang==='tr'?'Uygulamayı aç':'Open app'}</span><Icon name="diagonal" size={16}/></a></div>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero container" aria-labelledby="hero-title">
+      <p class="eyebrow hero-eyebrow"><span class="status-dot"></span>{c.badge}</p>
+      <h1 id="hero-title">{c.hero[0]}<br/><span>{c.hero[1]}</span></h1>
+      <p class="hero-description">{c.heroDescription}</p>
+      <div class="hero-actions"><a class="button" href={app}>{c.start}<Icon name="arrow"/></a><a class="button button-secondary" href="#showcase">{c.explore}<span aria-hidden="true">↓</span></a></div>
+      <p class="trust"><Icon name="lock" size={14}/>{c.trust}</p>
+      <figure class="hero-figure">
+        <div class="browser-frame">
+          <div class="browser-bar"><span class="browser-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="browser-address"><Icon name="lock" size={12}/>lite.rooknotes.com</span><span class="browser-label">{c.demo}</span></div>
+          <Screenshot file="daily-notes" alt={c.heroAlt} enlarge={c.enlarge} eager mobile="daily-mobile" class="hero-screenshot"/>
+        </div>
+        <figcaption><span>{c.heroCaption}</span><span class="caption-meta"><span class="status-dot"></span>{c.badge}</span></figcaption>
+      </figure>
+    </section>
+    <div class="promise-strip container">{c.strip.map((item,i)=><span><Icon name={['edit','layers','lock'][i]} size={18}/>{item}</span>)}</div>
+    <section id="how-it-works" class="section container" aria-labelledby="how-title">
+      <div class="section-heading"><p class="eyebrow">{c.howLabel}</p><h2 id="how-title">{c.howTitle}</h2><p>{c.howDescription}</p></div>
+      <div class="steps">{c.steps.map((step,i)=><article class="step"><div class="step-top"><span class="step-number">0{i+1}</span><span class="step-icon"><Icon name={step.icon} size={23}/></span></div><h3>{step.title}</h3><p>{step.description}</p><span class="step-detail">{step.detail}<Icon name="arrow" size={16}/></span></article>)}</div>
+    </section>
+    <section id="features" class="showcase-section section" aria-labelledby="showcase-title">
+      <div id="showcase" class="container">
+        <div class="showcase-heading"><div class="section-heading"><p class="eyebrow">{c.showcaseLabel}</p><h2 id="showcase-title" class="preserve-lines">{c.showcaseTitle}</h2></div><p>{c.showcaseDescription}</p></div>
+        <div class="tablist" role="tablist" aria-label={c.lang==='tr'?'Ürün ekranları':'Product views'}>{c.tabs.map((tab,i)=><button type="button" role="tab" id={`tab-${i}`} aria-controls={`panel-${i}`} aria-selected={i===0?'true':'false'} tabindex={i===0?0:-1} data-tab={i}><Icon name={['edit','layers','check'][i]} size={18}/>{tab.name}</button>)}</div>
+        {c.tabs.map((tab,i)=><div class="tab-panel" role="tabpanel" id={`panel-${i}`} aria-labelledby={`tab-${i}`} tabindex="0" hidden={i!==0}><div class="panel-copy"><h3>{tab.title}</h3><p>{tab.description}</p></div><div class="product-frame"><Screenshot file={tab.file} mobile={i===0?'daily-mobile':undefined} alt={tab.alt} enlarge={c.enlarge}/></div></div>)}
+        <p class="local-note"><Icon name="lock" size={15}/>{c.localNote}</p>
+        <p class="screen-language-note">{c.screenshotNote}</p>
+      </div>
+    </section>
+    <section class="section container benefits-section" aria-labelledby="benefits-title">
+      <div class="section-heading"><p class="eyebrow">{c.benefitsLabel}</p><h2 id="benefits-title" class="preserve-lines">{c.benefitsTitle}</h2></div>
+      <div class="benefits-grid">{c.benefits.map((benefit,i)=><article class:list={['benefit',`benefit-${i}`]}><div class="benefit-copy"><span class="benefit-icon"><Icon name={benefit.icon} size={21}/></span><p class="eyebrow">{benefit.tag}</p><h3>{benefit.title}</h3><p>{benefit.description}</p></div><div class="benefit-image"><Screenshot file={benefit.file} alt={benefit.alt} enlarge={c.enlarge}/></div></article>)}</div>
+    </section>
+    <section class="privacy-section section" aria-labelledby="privacy-title">
+      <div class="container privacy-grid">
+        <div class="privacy-copy"><p class="eyebrow"><Icon name="lock" size={16}/>{c.privacyLabel}</p><h2 id="privacy-title">{c.privacyTitle.map((line,i)=><Fragment>{i>0&&<br/>}<span class={i===2?'green':''}>{line}</span></Fragment>)}</h2><p class="privacy-description">{c.privacyDescription}</p><ul>{c.privacyPoints.map(point=><li><Icon name="circle" size={19}/><span>{point}</span></li>)}</ul><p class="privacy-detail">{c.privacyDetail}</p></div>
+        <div class="privacy-visual"><div class="dark-frame"><div class="dark-frame-label"><span class="status-dot"></span>Rook Lite <span aria-hidden="true">/</span> {c.lang==='tr'?'Koyu tema':'Dark mode'}</div><Screenshot file="daily-dark" alt={c.darkAlt} enlarge={c.enlarge}/></div><div class="backup-notice"><Icon name="download" size={22}/><div><strong>{c.backupWarning}</strong><p>{c.originNote}</p></div></div></div>
+      </div>
+    </section>
+    <section id="why-rook" class="section container" aria-labelledby="why-title">
+      <div class="showcase-heading"><div class="section-heading"><p class="eyebrow">{c.whyLabel}</p><h2 id="why-title" class="preserve-lines">{c.whyTitle}</h2></div><p>{c.whyDescription}</p></div>
+      <div class="comparison-desktop"><table><caption class="sr-only">{c.whyTitle}</caption><thead><tr><th scope="col" class="empty-heading"><span class="sr-only">{c.lang==='tr'?'Yaklaşım':'Approach'}</span></th>{c.comparisonHeaders.map((header,i)=><th scope="col" class={i===0?'rook-column':''}>{i===0&&<span class="status-dot"></span>}{header}</th>)}</tr></thead><tbody>{c.comparisonRows.map(row=><tr><th scope="row">{row[0]}</th>{row.slice(1).map((cell,i)=><td class={i===0?'rook-column':''}>{cell}</td>)}</tr>)}</tbody></table></div>
+      <div class="comparison-mobile">{c.comparisonHeaders.map((header,i)=><article class:list={['comparison-card',i===0&&'rook-comparison']}><h3>{i===0&&<span class="status-dot"></span>}{header}</h3><dl>{c.comparisonRows.map(row=><div><dt>{row[0]}</dt><dd>{row[i+1]}</dd></div>)}</dl></article>)}</div>
+      <p class="comparison-note">{c.comparisonNote}</p>
+    </section>
+    <section class="source-section container" aria-labelledby="source-title"><div class="source-art" aria-hidden="true"><span class="source-bracket">{`{`}</span><img src={local('images/rook-logo.webp')} width="96" height="96" alt="" loading="lazy"/><span class="source-bracket">{`}`}</span><span class="source-art-label">{c.lang==='tr'?'< açık kaynakla geliştirildi / >':'< built in the open / >'}</span></div><div class="source-copy"><p class="eyebrow">{c.sourceLabel}</p><h2 id="source-title" class="preserve-lines">{c.sourceTitle}</h2><p>{c.sourceDescription}</p><div class="source-actions"><a href={github} class="button button-ink"><Icon name="github"/>{c.sourceCta}<Icon name="diagonal" size={17}/></a><a href={license} class="license-link">{c.license}<Icon name="diagonal" size={14}/></a></div><p class="source-note">{c.sourceNote}</p></div></section>
+    <section id="faq" class="section container faq-section" aria-labelledby="faq-title"><div class="section-heading"><p class="eyebrow">{c.faqLabel}</p><h2 id="faq-title" class="preserve-lines">{c.faqTitle}</h2></div><div class="faq-list">{c.faqs.map(([question,answer])=><details><summary>{question}<span class="faq-plus"><Icon name="plus" size={20}/></span></summary><p>{answer}</p></details>)}</div></section>
+    <section class="final-section" aria-labelledby="final-title"><div class="container final-inner"><p class="eyebrow"><span class="status-dot"></span>{c.finalLabel}</p><h2 id="final-title" class="preserve-lines">{c.finalTitle}</h2><p>{c.finalDescription}</p><a class="button" href={app}>{c.open}<Icon name="arrow"/></a><p class="final-trust">{c.finalTrust}</p></div></section>
+  </main>
+  <footer class="container site-footer"><div class="footer-top"><div><a href={local(c.lang==='tr'?'tr/':'')} class="brand"><img src={local('images/rook-logo.webp')} width="34" height="34" alt=""/><span>rook<span class="brand-light">notes</span><span class="brand-dot">.</span></span></a><p>{c.footerDescription}</p></div><nav aria-label={c.lang==='tr'?'Alt gezinme':'Footer navigation'}><a href={app}>{c.footerApp}<Icon name="diagonal" size={14}/></a><a href={github}>{c.footerSource}<Icon name="diagonal" size={14}/></a><a href={license}>{c.footerLicense}<Icon name="diagonal" size={14}/></a><a href={local(c.alternate)} hreflang={c.lang==='tr'?'en':'tr'}>{c.alternateLabel}<Icon name="globe" size={15}/></a></nav></div><div class="footer-bottom"><span>© {new Date().getFullYear()} Rook Notes</span><span>{c.footerBottom}</span></div></footer>
+  <dialog id="image-dialog" aria-labelledby="dialog-title"><div class="dialog-header"><h2 id="dialog-title">{c.screenshotTitle}</h2><button type="button" class="dialog-close" aria-label={c.close}><Icon name="close"/><span>{c.close}</span></button></div><div class="dialog-image-scroll" tabindex="0" role="region" aria-label={c.screenshotTitle}><img id="dialog-image" alt=""/></div><p id="dialog-caption"></p></dialog>
+  <script>
+    const menu = document.querySelector<HTMLButtonElement>('.menu-toggle')!;
+    const nav = document.querySelector<HTMLElement>('#site-navigation')!;
+    function closeMenu() { menu.setAttribute('aria-expanded','false'); nav.classList.remove('is-open'); }
+    menu.addEventListener('click', () => { const open=menu.getAttribute('aria-expanded')!=='true'; menu.setAttribute('aria-expanded',String(open)); nav.classList.toggle('is-open',open); });
+    nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu.getAttribute('aria-expanded')==='true'){closeMenu();menu.focus();}});
+    document.addEventListener('click',e=>{if(!(e.target as Element).closest('.nav-container'))closeMenu();});
+    const media = matchMedia('(min-width: 1001px)');
+    media.addEventListener('change',closeMenu);
+    const tabs = [...document.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    function selectTab(tab:HTMLButtonElement) { tabs.forEach(t=>{const active=t===tab;t.setAttribute('aria-selected',String(active));t.tabIndex=active?0:-1;document.getElementById(t.getAttribute('aria-controls')!)!.hidden=!active;}); }
+    tabs.forEach((tab,i)=>{tab.addEventListener('click',()=>selectTab(tab));tab.addEventListener('keydown',e=>{let target:number|undefined;if(e.key==='ArrowRight')target=(i+1)%tabs.length;else if(e.key==='ArrowLeft')target=(i+tabs.length-1)%tabs.length;else if(e.key==='Home')target=0;else if(e.key==='End')target=tabs.length-1;if(target!==undefined){e.preventDefault();selectTab(tabs[target]);tabs[target].focus();}});});
+    const dialog = document.querySelector<HTMLDialogElement>('#image-dialog')!;
+    const image = document.querySelector<HTMLImageElement>('#dialog-image')!;
+    const caption = document.querySelector<HTMLElement>('#dialog-caption')!;
+    let opener:HTMLElement|null=null;
+    document.querySelectorAll<HTMLButtonElement>('[data-zoom]').forEach(button=>button.addEventListener('click',()=>{opener=button;image.src=matchMedia('(max-width: 700px)').matches&&button.dataset.mobileZoom?button.dataset.mobileZoom:button.dataset.zoom!;image.alt=button.dataset.alt!;caption.textContent=button.dataset.alt!;dialog.showModal();document.body.classList.add('modal-open');}));
+    dialog.querySelector('.dialog-close')!.addEventListener('click',()=>dialog.close());
+    dialog.addEventListener('click',e=>{if(e.target===dialog){const rect=dialog.getBoundingClientRect();if(e.clientX<rect.left||e.clientX>rect.right||e.clientY<rect.top||e.clientY>rect.bottom)dialog.close();}});
+    dialog.addEventListener('close',()=>{document.body.classList.remove('modal-open');opener?.focus({preventScroll:true});});
+  </script>
+</body>
+</html>

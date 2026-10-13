@@ -1,0 +1,101 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Check types
+        run: npm run check
+      - name: Configure Pages
+        if: github.event_name != 'pull_request'
+        id: pages
+        uses: actions/configure-pages@v5
+      - name: Build site
+        env:
+          ASTRO_SITE: ${{ steps.pages.outputs.origin || format('https://{0}.github.io', github.repository_owner) }}
+          ASTRO_BASE: ${{ steps.pages.outputs.base_path || (steps.pages.outputs.origin && '/') || format('/{0}', github.event.repository.name) }}
+        run: npm run build
+      - name: Install test browser
+        run: npx playwright install --with-deps chromium
+      - name: Check the built site in Chromium
+        env:
+          ASTRO_SITE: ${{ steps.pages.outputs.origin || format('https://{0}.github.io', github.repository_owner) }}
+          ASTRO_BASE: ${{ steps.pages.outputs.base_path || (steps.pages.outputs.origin && '/') || format('/{0}', github.event.repository.name) }}
+        run: |
+          set -euo pipefail
+          npm run preview -- --host 127.0.0.1 --port 4321 > /tmp/rook-preview.log 2>&1 &
+          preview_pid=$!
+          trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
+          base_path="/${ASTRO_BASE#/}"
+          base_path="${base_path%/}"
+          site_url="http://127.0.0.1:4321${base_path}"
+          ready=false
+          for attempt in {1..30}; do
+            if curl --fail --silent "${site_url}/" > /dev/null; then
+              ready=true
+              break
+            fi
+            sleep 1
+          done
+          if [ "$ready" != true ]; then
+            cat /tmp/rook-preview.log
+            exit 1
+          fi
+          export CHROMIUM_PATH="$(node --input-type=module -e 'import { chromium } from "playwright"; process.stdout.write(chromium.executablePath());')"
+          SITE_URL="$site_url" SITE_CANONICAL="${ASTRO_SITE%/}${base_path}" npm test
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-test-reports
+          path: .artifacts/
+          if-no-files-found: ignore
+          include-hidden-files: true
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy site
+        id: deployment
+        uses: actions/deploy-pages@v4

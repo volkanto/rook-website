@@ -1,0 +1,94 @@
+{
+  "base": "http://127.0.0.1:4323/rook-website",
+  "testedAt": "2026-10-13T09:43:37.386Z",
+  "results": [
+    {
+      "name": "en: language, metadata, real assets, and destinations",
+      "result": "passed"
+    },
+    {
+      "name": "en: tabs support arrows, Home, End, and correct panels",
+      "result": "passed"
+    },
+    {
+      "name": "en: screenshot dialog traps focus, closes with Escape, and restores focus",
+      "result": "passed"
+    },
+    {
+      "name": "en: FAQ keyboard operation",
+      "result": "passed"
+    },
+    {
+      "name": "en: WCAG AA automated checks",
+      "result": "passed"
+    },
+    {
+      "name": "en: 390px layout has no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "en: mobile navigation and zoom",
+      "result": "passed"
+    },
+    {
+      "name": "en: 768px layout has no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "en: 1440px layout has no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "en: no JavaScript errors",
+      "result": "passed"
+    },
+    {
+      "name": "tr: language, metadata, real assets, and destinations",
+      "result": "passed"
+    },
+    {
+      "name": "tr: tabs support arrows, Home, End, and correct panels",
+      "result": "passed"
+    },
+    {
+      "name": "tr: screenshot dialog traps focus, closes with Escape, and restores focus",
+      "result": "passed"
+    },
+    {
+      "name": "tr: FAQ keyboard operation",
+      "result": "passed"
+    },
+    {
+      "name": "tr: WCAG AA automated checks",
+      "result": "passed"
+    },
+    {
+      "name": "tr: 390px layout has no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "tr: mobile navigation and zoom",
+      "result": "passed"
+    },
+    {
+      "name": "tr: 768px layout has no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "tr: 1440px layout has no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "tr: no JavaScript errors",
+      "result": "passed"
+    },
+    {
+      "name": "Reduced motion is respected",
+      "result": "passed"
+    },
+    {
+      "name": "Language link changes all content",
+      "result": "passed"
+    }
+  ]
+}

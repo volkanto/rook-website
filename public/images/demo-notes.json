@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "exportedAt": "2026-10-09T16:00:00.000Z",
+  "application": {
+    "name": "rook-lite",
+    "version": "1.6.0"
+  },
+  "notes": [
+    {
+      "id": "demo-note-1",
+      "noteDate": "2026-10-05",
+      "title": "A small, useful start",
+      "content": "### Monday · Set the direction\n\nA quieter week starts with a clearer plan.\n\n- [x] Map the onboarding journey\n- [x] Write the first welcome screen\n- [ ] Ask Maya to review the empty states\n\n#project #design",
+      "tags": [
+        "project",
+        "design"
+      ],
+      "language": "en",
+      "createdAt": "2026-10-05T09:30:00.000Z",
+      "updatedAt": "2026-10-05T15:30:00.000Z",
+      "archived": false
+    },
+    {
+      "id": "demo-note-2",
+      "noteDate": "2026-10-05",
+      "title": "One thing learned",
+      "content": "### A small discovery\n\nA useful empty state answers two questions: what belongs here, and what can I do next?\n\n#learning",
+      "tags": [
+        "learning"
+      ],
+      "language": "en",
+      "createdAt": "2026-10-05T15:30:00.000Z",
+      "updatedAt": "2026-10-05T15:30:00.000Z",
+      "archived": false
+    },
+    {
+      "id": "demo-note-3",
+      "noteDate": "2026-10-06",
+      "title": "Design check-in",
+      "content": "### Tuesday · Design check-in\n\nAgreed to keep onboarding to three steps.\n\n- [x] Share the prototype with the team\n- [ ] Check keyboard navigation\n\n#meeting #project",
+      "tags": [
+        "meeting",
+        "project"
+      ],
+      "language": "en",
+      "createdAt": "2026-10-06T09:30:00.000Z",
+      "updatedAt": "2026-10-06T15:30:00.000Z",
+      "archived": false
+    },
+    {
+      "id": "demo-note-4",
+      "noteDate": "2026-10-06",
+      "title": "Keep it simple",
+      "content": "### Less, but clearer\n\nRemoved an extra setup step. First-time users can start writing sooner.\n\n#learning",
+      "tags": [
+        "learning"
+      ],
+      "language": "en",
+      "createdAt": "2026-10-06T15:30:00.000Z",
+      "updatedAt": "2026-10-06T15:30:00.000Z",
+      "archived": false
+    },
+    {
+      "id": "demo-note-5",
+      "noteDate": "2026-10-07",
+      "title": "Build day",
+      "content": "### Wednesday · Build day\n\nThe welcome screen is in place. Small improvements add up.\n\n- [x] Build the responsive layout\n- [x] Fix focus styles\n- [ ] Test on a small phone\n\n#development",
+      "tags": [
+        "development"
+      ],
+      "language": "en",
+      "createdAt": "2026-10-07T09:30:00.000Z",
+      "updatedAt": "2026-10-07T15:30:00.000Z",
+      "archived": false
+    },
+    {
+      "id": "demo-note-6",
+      "noteDate": "2026-10-07",
+      "title": "Meeting follow-up",
+      "content": "### Meeting actions\n\n- [x] Send the updated flow\n- [ ] Schedule a usability check next week\n\n#meeting",
+      "tags": [
+        "meeting"
+      ],
+      "language": "en",
+      "createdAt": "2026-10-07T15:30:00.000Z",
+      "updatedAt": "2026-10-07T15:30:00.000Z",
+      "archived": false
+    },
+    {
+      "id": "demo-note-7",
+      "noteDate": "2026-10-08",
+      "title": "Make room for polish",
+      "content": "### Thursday · A little polish\n\nTested the full journey with a keyboard. The new focus order feels natural.\n\n- [x] Check keyboard navigation\n- [x] Add helpful field labels\n\n#development #design",
+      "tags": [
+        "development",
+        "design"
+      ],
+      "language": "en",
+      "createdAt": "2026-10-08T09:30:00.000Z",
+      "updatedAt": "2026-10-08T15:30:00.000Z",
+      "archived": false
+    },
+    {
+      "id": "demo-note-8",
+      "noteDate": "2026-10-08",
+      "title": "A useful reminder",
+      "content": "### Keep the next step visible\n\nGood interfaces leave room to think. More choices are not always more helpful.\n\n#learning",
+      "tags": [
+        "learning"
+      ],
+      "language": "en",
+      "createdAt": "2026-10-08T15:30:00.000Z",
+      "updatedAt": "2026-10-08T15:30:00.000Z",
+      "archived": false
+    },
+    {
+      "id": "demo-note-9",
+      "noteDate": "2026-10-09",
+      "title": "A week of small wins",
+      "content": "### Friday · A week of small wins\n\nShipped the new welcome flow. Fewer steps, clearer words, a little more breathing room.\n\n- [x] Ship the onboarding update\n- [x] Document the design decisions\n- [ ] Review feedback on Monday\n\n**Next week:** make the first note even easier to write.\n\n#project #reflection",
+      "tags": [
+        "project",
+        "reflection"
+      ],
+      "language": "en",
+      "createdAt": "2026-10-09T09:30:00.000Z",
+      "updatedAt": "2026-10-09T15:30:00.000Z",
+      "archived": false
+    },
+    {
+      "id": "demo-note-10",
+      "noteDate": "2026-10-09",
+      "title": "Next week, gently",
+      "content": "### Looking ahead\n\nMove the mobile usability check to Monday. Keep one afternoon free for fixes.\n\n#planning",
+      "tags": [
+        "planning"
+      ],
+      "language": "en",
+      "createdAt": "2026-10-09T15:30:00.000Z",
+      "updatedAt": "2026-10-09T15:30:00.000Z",
+      "archived": false
+    }
+  ],
+  "summaries": [],
+  "settings": [
+    {
+      "key": "analyticsEnabled",
+      "value": false,
+      "updatedAt": "2026-10-09T16:00:00.000Z"
+    }
+  ]
+}

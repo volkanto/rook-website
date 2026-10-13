@@ -1,0 +1,12 @@
+{
+  "testedAt": "2026-10-13T09:26:41.567Z",
+  "source": "Rook Lite 1.6.0 local production build",
+  "checks": [
+    "Service worker controlling page",
+    "Offline reload after online caching",
+    "Create and save note offline",
+    "Reload and read persisted offline note"
+  ],
+  "result": "passed",
+  "limitation": "Live deployment could not be verified: domain blocked by environment policy. A first visit and missing or cleared cache require connectivity."
+}
