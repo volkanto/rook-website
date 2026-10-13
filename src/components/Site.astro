@@ -3,6 +3,7 @@ import { en } from '../content/en';
 import Icon from './Icon.astro';
 import Screenshot from './Screenshot.astro';
 import '../styles/global.css';
+import '../styles/theme.css';
 interface Props { content: typeof en }
 const {content:c} = Astro.props;
 const app = 'https://lite.rooknotes.com';
@@ -27,6 +28,47 @@ const structuredData = {
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#F7F7F8" />
+  <script is:inline>
+    (() => {
+      const key = 'rook-notes-theme';
+      const root = document.documentElement;
+      const system = window.matchMedia('(prefers-color-scheme: dark)');
+      const normalize = value => value === 'light' || value === 'dark' ? value : 'system';
+      let preference = 'system';
+      try { preference = normalize(localStorage.getItem(key)); } catch {}
+
+      function apply() {
+        const theme = preference === 'system' ? (system.matches ? 'dark' : 'light') : preference;
+        root.dataset.theme = theme;
+        root.dataset.themePreference = preference;
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', theme === 'dark' ? '#202024' : '#F7F7F8');
+        const select = document.getElementById('theme-select');
+        if (select) select.value = preference;
+      }
+      // Runs before the page styles and body render, including saved overrides.
+      apply();
+      system.addEventListener('change', apply);
+      window.addEventListener('storage', event => {
+        if (event.key === key || event.key === null) {
+          preference = normalize(event.key === null ? null : event.newValue);
+          apply();
+        }
+      });
+      document.addEventListener('DOMContentLoaded', () => {
+        const select = document.getElementById('theme-select');
+        select.value = preference;
+        select.disabled = false;
+        select.addEventListener('change', () => {
+          preference = normalize(select.value);
+          try {
+            if (preference === 'system') localStorage.removeItem(key);
+            else localStorage.setItem(key, preference);
+          } catch {}
+          apply();
+        });
+      }, { once: true });
+    })();
+  </script>
   <title>{c.title}</title><meta name="description" content={c.description}/>
   <link rel="canonical" href={canonical}/>
   <link rel="alternate" hreflang="en" href={absolute('')}/>
@@ -54,7 +96,17 @@ const structuredData = {
         {c.nav.map((label,i)=><a href={`#${anchors[i]}`}>{label}</a>)}
         <a href={github} class="github-nav" aria-label="GitHub"><Icon name="github" size={19}/><span>GitHub</span></a>
       </nav>
-      <div class="nav-actions"><a class="language-link" href={local(c.alternate)} hreflang={c.lang==='tr'?'en':'tr'} aria-label={c.languageLabel}><Icon name="globe" size={17}/><span>{c.lang==='tr'?'EN':'TR'}</span></a><a class="button button-small" href={app}><span class="nav-cta-full">{c.open}</span><span class="nav-cta-short">{c.lang==='tr'?'Uygulamayı aç':'Open app'}</span><Icon name="diagonal" size={16}/></a></div>
+      <div class="nav-actions">
+        <span class="theme-control" title={c.themeLabel}>
+          <Icon name="sun" size={18} class="theme-icon-light"/>
+          <Icon name="moon" size={18} class="theme-icon-dark"/>
+          <select id="theme-select" aria-label={c.themeLabel} disabled>
+            <option value="system">{c.themeSystem}</option>
+            <option value="light">{c.themeLight}</option>
+            <option value="dark">{c.themeDark}</option>
+          </select>
+        </span>
+        <a class="language-link" href={local(c.alternate)} hreflang={c.lang==='tr'?'en':'tr'} aria-label={c.languageLabel}><Icon name="globe" size={17}/><span>{c.lang==='tr'?'EN':'TR'}</span></a><a class="button button-small" href={app}><span class="nav-cta-full">{c.open}</span><span class="nav-cta-short">{c.lang==='tr'?'Uygulamayı aç':'Open app'}</span><Icon name="diagonal" size={16}/></a></div>
     </div>
   </header>
   <main id="main">

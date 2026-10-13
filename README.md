@@ -11,7 +11,7 @@ npm ci
 npm run dev -- --port 4321
 ```
 
-English is served at `/`, Turkish at `/tr/`. The existing checkout is already isolated; a Git worktree is unnecessary. No credentials, database, third-party font calls, or analytics setup are required. Astro CLI telemetry is disabled in the package scripts.
+English is served at `/`, Turkish at `/tr/`. The header theme control offers System, Light, and Dark; it initially follows the operating system and remembers explicit choices. The existing checkout is already isolated; a Git worktree is unnecessary. No credentials, database, third-party font calls, or analytics setup are required. Astro CLI telemetry is disabled in the package scripts.
 
 ## Validate and build
 
@@ -29,7 +29,7 @@ The browser checks require Chromium at `/usr/bin/chromium`, or set `CHROMIUM_PAT
 
 ## GitHub Pages deployment
 
-`.github/workflows/deploy-pages.yml` runs on pushes to `main`, pull requests, and manual dispatch. It installs the lockfile dependencies with Node.js 24, checks types, builds, and runs all 22 browser/accessibility checks against the production output. Pull requests validate without deploying. Successful pushes to `main` or manual runs upload `dist/` and deploy it with GitHub's official Pages actions. Only the deploy job receives `pages:write` and `id-token:write`; no custom deployment secret is needed.
+`.github/workflows/deploy-pages.yml` runs on pushes to `main`, pull requests, and manual dispatch. It installs the lockfile dependencies with Node.js 24, checks types, builds, and runs all browser/accessibility and theme-preference checks against the production output. Pull requests validate without deploying. Successful pushes to `main` or manual runs upload `dist/` and deploy it with GitHub's official Pages actions. Only the deploy job receives `pages:write` and `id-token:write`; no custom deployment secret is needed.
 
 In the repository's **Settings → Pages → Build and deployment**, select **GitHub Actions** as Source. If this is the first setup, enable Pages before running the workflow, then use **Actions → Deploy GitHub Pages → Run workflow** if needed. The workflow gets the site's origin and base path from GitHub Pages, so the default project URL (`https://volkanto.github.io/rook-website/`) and an already-configured custom domain both work. To publish at `rooknotes.com`, configure that custom domain and its DNS in Pages settings; this workflow does not change DNS.
 
@@ -50,7 +50,7 @@ For a custom domain at the root, use `ASTRO_SITE=https://rooknotes.com ASTRO_BAS
 - `src/components/Site.astro`: page flow, navigation, tabs, FAQ, dialog, SEO and structured data.
 - `src/components/Screenshot.astro`: dimensioned real images, lazy loading, accessible enlargement.
 - `src/components/Icon.astro`: local lightweight SVG icons.
-- `src/styles/global.css`: semantic brand tokens, responsive layouts and reduced motion.
+- `src/styles/global.css` and `src/styles/theme.css`: shared light/dark brand tokens, responsive layouts, theme controls and reduced motion.
 - `public/images/manifest.json`: original screenshot source, commit, dimensions, and demo provenance.
 - `docs/feature-verification.md`: evidence and limitations for product claims.
 - `docs/validation.md`: verified results and manual review notes.

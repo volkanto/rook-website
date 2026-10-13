@@ -1,0 +1,91 @@
+/* Apply the same dark tokens for explicit choices and the no-JavaScript fallback. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg: #19191d;
+  --color-surface: #202024;
+  --color-text: #f5f5f7;
+  --color-secondary: #b8b8c2;
+  --color-muted: #a0a0a8;
+  --color-brand: #aaaaff;
+  --color-brand-soft: #2c2c43;
+  --color-on-brand: #19191d;
+  --color-on-ink: #202024;
+  --color-border: #383840;
+  --color-subtle: #303037;
+  --color-border-strong: #64646f;
+  --color-chrome: #2b2b32;
+  --color-tab-rail: #2b2b32;
+  --color-frame-border: #383840;
+  --color-browser-dot: #70707d;
+  --shadow: 0 22px 64px -30px #00000066;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    color-scheme: dark;
+    --color-bg: #19191d;
+    --color-surface: #202024;
+    --color-text: #f5f5f7;
+    --color-secondary: #b8b8c2;
+    --color-muted: #a0a0a8;
+    --color-brand: #aaaaff;
+    --color-brand-soft: #2c2c43;
+    --color-on-brand: #19191d;
+    --color-on-ink: #202024;
+    --color-border: #383840;
+    --color-subtle: #303037;
+    --color-border-strong: #64646f;
+    --color-chrome: #2b2b32;
+    --color-tab-rail: #2b2b32;
+    --color-frame-border: #383840;
+    --color-browser-dot: #70707d;
+    --shadow: 0 22px 64px -30px #00000066;
+  }
+}
+
+.theme-control {
+  display: grid;
+  place-items: center;
+  position: relative;
+  width: 38px;
+  height: 40px;
+  flex-shrink: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface);
+  color: var(--color-secondary);
+}
+.theme-control:hover { color: var(--color-brand); }
+.theme-control svg { pointer-events: none; }
+.theme-control select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  appearance: none;
+  background: transparent;
+  color: transparent;
+  border: 0;
+  border-radius: inherit;
+  font-size: 0;
+  cursor: pointer;
+}
+.theme-control option {
+  font-size: 14px;
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+.theme-icon-dark { display: none; }
+:root[data-theme="dark"] .theme-icon-dark { display: block; }
+:root[data-theme="dark"] .theme-icon-light { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .theme-icon-dark { display: block; }
+  :root:not([data-theme]) .theme-icon-light { display: none; }
+}
+@media (max-width: 700px) {
+  .theme-control { width: 36px; height: 38px; }
+  .nav-actions { gap: 6px; }
+}
+@media (max-width: 450px) {
+  .nav-actions .button-small > svg { display: none; }
+}

@@ -4,6 +4,7 @@ export const tr: typeof en = {
   title: 'Rook Notes — Gününü kaydet. İlerlemeni gör.',
   description: 'Günlük notlar, görevler ve haftalık değerlendirmeler için kişisel bir alan. Rook Lite ücretsizdir, açık kaynaklıdır ve tarayıcında çalışır. Hesap gerekmez.',
   skip: 'İçeriğe geç', menu: 'Menü', menuLabel: 'Gezinme menüsünü aç', close: 'Kapat',
+  themeLabel: 'Renk teması', themeSystem: 'Sistem', themeLight: 'Açık', themeDark: 'Koyu',
   nav: ['Özellikler', 'Nasıl çalışır?', 'Neden Rook?', 'SSS'], open: 'Rook Lite’ı aç',
   eyebrow: 'HER GÜNÜN İÇİN KÜÇÜK BİR ALAN', badge: 'Ücretsiz · Açık kaynak · Önce yerel',
   hero: ['Gününü kaydet.', 'İlerlemeni gör.'],

@@ -3,6 +3,7 @@ export const en = {
   title: 'Rook Notes — Capture your day. See your progress.',
   description: 'A private space for daily notes, tasks, and weekly reflections. Try Rook Lite: free, open source, and stored in your browser. No account required.',
   skip: 'Skip to content', menu: 'Menu', menuLabel: 'Open navigation', close: 'Close',
+  themeLabel: 'Color theme', themeSystem: 'System', themeLight: 'Light', themeDark: 'Dark',
   nav: ['Features', 'How it works', 'Why Rook', 'FAQ'], open: 'Open Rook Lite',
   eyebrow: 'A LITTLE SPACE FOR YOUR EVERYDAY', badge: 'Free · Open source · Local-first',
   hero: ['Capture your day.', 'See your progress.'],

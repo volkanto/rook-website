@@ -25,3 +25,13 @@ Reusable components: `Icon.astro` (local accessible decorative icons), `Screensh
 No external fonts, analytics, remote embeds, autoplay video, scroll hijacking, neon surfaces or stock photography are included. Reduced-motion preferences disable animation and smooth scrolling. Native dialog supplies focus containment and Escape; the previous focus is explicitly restored.
 
 Palette source: `src/app.css` in [Rook Lite commit 19834729](https://github.com/volkanto/rook-lite/blob/19834729d368fa3a5aca04345fd28101b79d0790/src/app.css). The indigo/lavender pair comes from its “Rook fallback palette”; charcoal tokens come from its explicit dark-theme palette. The active app screenshots retain their original blue controls. Hover and dark-section brand accents are derived from these source tokens for contrast.
+
+## Theme preference
+
+The header’s native, keyboard-accessible theme selector offers System, Light, and Dark in both languages. System is the initial preference and follows `prefers-color-scheme`, including live changes. An explicit Light/Dark choice is saved under `rook-notes-theme` in this marketing site’s browser storage; it persists across reloads and language navigation. Selecting System removes that override. Choices synchronize between tabs. Storage failure keeps switching available for the current page.
+
+A small inline head script resolves the theme before the body renders, preventing a light flash for saved dark preferences. The CSS media-query fallback follows the OS when JavaScript is disabled. The theme selector is disabled until its handler is attached.
+
+Dark mode keeps the same layout, typography, section rhythm and imagery. It uses charcoal surfaces (`#19191D` / `#202024`), readable light text (`#F5F5F7`), and softened indigo (`#AAAAFF`) with dark text on primary buttons. Screenshot frames, comparison cards, support buttons, FAQ controls, navigation and the image dialog use the shared theme tokens. Real product screenshots retain their captured appearance.
+
+`src/styles/theme.css` holds the dark tokens and header control; `scripts/theme-checks.mjs` verifies initial system preferences, first-render saved overrides, live system changes, keyboard switching, persistence, returning to System, tab synchronization, and storage/JavaScript fallbacks. Dark desktop and mobile previews in both languages are saved alongside the light previews with `-dark-` in the filename.
